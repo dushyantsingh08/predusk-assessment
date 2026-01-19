@@ -135,7 +135,7 @@ curl -X GET http://localhost:3000/api/projects/skill/React
 
 ## ⚠️ Known Limitations
 *   **Single User**: The current architecture is designed for a single owner/profile.
-*   **Auth**: There is no authentication protection on `POST`/`PATCH` endpoints (Open API). **Secure this before public deployment.**
+*   **Auth**: There is no authentication protection on `POST`/`PATCH` endpoints (Open API). 
 *   **Search**: Basic regex-based search; not optimized for large datasets.
 
 ---
