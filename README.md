@@ -1,74 +1,142 @@
-# Candidate Profile Playground
+# Me-API: Full Stack Developer Portfolio
 
-A full-stack candidate profile application built with Next.js (App Router), Mongoose, and Tailwind CSS.
+A dynamic, full-stack portfolio application built with Next.js, serving as both a personal website and a showcase of technical skills.
 
-## Features
+## 🏗 Architecture
 
-- **Profile Management**: View and update candidate profile details.
-- **Project Gallery**: Browse projects with a "Bento-grid" layout.
-- **Skill Filtering**: Filter projects by associated skills.
-- **Real-time Search**: Search projects by title and description.
-- **Responsive Design**: Mobile-first UI with Tailwind CSS.
+*   **Frontend**: Next.js 14+ (App Router), React, Tailwind CSS.
+*   **Backend**: Next.js API Routes (Serverless functions).
+*   **Database**: MongoDB (via Mongoose ODM).
+*   **Language**: TypeScript (Strict typing).
+*   **Deployment**: Vercel (Recommended).
 
-## Tech Stack
+## 🚀 Setup Instructions
 
-- **Framework**: Next.js 15+ (App Router)
-- **Database**: MongoDB with Mongoose
-- **Styling**: Tailwind CSS + custom UI components
-- **Language**: TypeScript
+### Prerequisites
+*   Node.js 18+
+*   MongoDB Instance (Local or Atlas)
 
-## Architecture
+### Local Development
 
-This project uses the Next.js App Router for both frontend pages and backend API routes.
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository-url>
+    cd me-api
+    ```
 
-- `app/api/*`: API Route Handlers.
-- `models/*`: Mongoose schema definitions.
-- `components/*`: React UI components.
-- `lib/dbConnect.ts`: Singleton MongoDB connection.
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-## Setup
+3.  **Environment Setup:**
+    Create a `.env` file in the root directory:
+    ```env
+    MONGODB_URI=mongodb://localhost:27017/me-portfolio
+    # Add other keys if necessary
+    ```
 
-1. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+    Access the app at `http://localhost:3000`.
 
-2. **Configure Environment**:
-   Create a `.env` file in the root directory:
-   ```env
-   MONGODB_URI="mongodb://127.0.0.1:27017/candidate-playground"
-   ```
+### Production Build
 
-3. **Seed Database**:
-   Populate the database with initial data:
-   ```bash
-   npm run seed
-   ```
+1.  **Build the application:**
+    ```bash
+    npm run build
+    ```
 
-4. **Run Development Server**:
-   ```bash
-   npm run dev
-   ```
+2.  **Start the production server:**
+    ```bash
+    npm start
+    ```
 
-## API Endpoints
+## 🗄 Database Schema
 
-- `GET /api/health`: Health check.
-- `GET /api/profile`: Get profile details.
-- `POST /api/profile`: Create profile.
-- `PATCH /api/profile`: Update profile.
-- `GET /api/search?q=query`: Search projects (regex).
-- `GET /api/projects/skill/:skillName`: Get projects by skill.
-- `GET /api/skills/top`: Get top skills by usage count.
+### Profile (`profiles`)
+Stores the main user information. Designed for a single-user portfolio.
 
-## Deployment
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `name` | String | Full name |
+| `email` | String | Contact email (Unique) |
+| `bio` | String | Short biography |
+| `socialLinks` | Object | GitHub, LinkedIn, Portfolio URLs |
+| `education` | Array | List of degrees/schools |
+| `experience` | Array | Professional history |
 
-### Vercel + MongoDB Atlas
+### Project (`projects`)
+Showcase of work.
 
-1. Push code to GitHub.
-2. Import project into Vercel.
-3. Add `MONGODB_URI` to Vercel Environment Variables (use connection string from MongoDB Atlas).
-4. Redeploy.
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `title` | String | Project Name |
+| `description` | String | Detailed description |
+| `liveUrl` | String | URL to live demo |
+| `repoUrl` | String | URL to source code |
+| `skills` | Array | References to `Skill` IDs |
 
-## Testing
+### Skill (`skills`)
+Technical skills and proficiency.
 
-See `test-requests.http` for sample API requests.
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `name` | String | Skill name (e.g., "React") |
+| `level` | Enum | "Beginner", "Intermediate", "Expert" |
+
+## 📡 API Endpoints & Usage
+
+### 1. Get Profile
+Fetch the user's profile data.
+
+**Curl:**
+```bash
+curl -X GET http://localhost:3000/api/profile
+```
+
+### 2. Create Profile (Setup)
+Initialize the portfolio with your data.
+
+**Curl:**
+```bash
+curl -X POST http://localhost:3000/api/profile \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "bio": "Full Stack Dev",
+    "socialLinks": { "github": "https://github.com/janedoe" },
+    "education": [],
+    "experience": []
+  }'
+```
+
+### 3. Search Projects
+Filter projects by keyword.
+
+**Curl:**
+```bash
+curl -X GET "http://localhost:3000/api/search?q=dashboard"
+```
+
+### 4. Filter by Skill
+Get all projects using a specific technology.
+
+**Curl:**
+```bash
+curl -X GET http://localhost:3000/api/projects/skill/React
+```
+
+## 📄 Resume
+[Download My Resume](#) *(https://drive.google.com/file/d/1AdfRbvQIhiuv_f62WdQL4FKHH3DDVoFO/view?usp=sharing)*
+
+## ⚠️ Known Limitations
+*   **Single User**: The current architecture is designed for a single owner/profile.
+*   **Auth**: There is no authentication protection on `POST`/`PATCH` endpoints (Open API). **Secure this before public deployment.**
+*   **Search**: Basic regex-based search; not optimized for large datasets.
+
+---
+*Built with ❤️ using Next.js & MongoDB.*
