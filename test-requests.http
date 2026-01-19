@@ -1,0 +1,26 @@
+### Health Check
+GET http://localhost:3000/api/health
+
+### Get Profile
+GET http://localhost:3000/api/profile
+
+### Create Profile (Will fail if exists)
+POST http://localhost:3000/api/profile
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "bio": "Dev",
+  "education": [],
+  "socialLinks": {}
+}
+
+### Search Projects
+GET http://localhost:3000/api/search?q=react
+
+### Projects by Skill
+GET http://localhost:3000/api/projects/skill/React
+
+### Top Skills
+GET http://localhost:3000/api/skills/top
